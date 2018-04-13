@@ -18,7 +18,7 @@
         </activity>
 
         <receiver
-            android:name=".AlarmReceiver"
+            android:name=".alarms.AlarmReceiver"
             android:process=":remote"></receiver>
 
         <activity android:name=".activities.DisplayNotificationActivity"></activity>

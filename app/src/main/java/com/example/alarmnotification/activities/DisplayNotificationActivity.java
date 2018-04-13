@@ -9,7 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.example.alarmnotification.AlarmReceiver;
+import com.example.alarmnotification.alarms.AlarmReceiver;
 import com.example.alarmnotification.R;
 import com.example.alarmnotification.reminders.Reminder;
 import com.example.alarmnotification.reminders.ReminderFiles;
