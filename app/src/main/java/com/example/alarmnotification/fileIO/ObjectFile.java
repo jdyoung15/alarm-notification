@@ -44,4 +44,8 @@ public class ObjectFile {
     return object;
   }
 
+  public void delete() {
+    context.deleteFile(filename);
+  }
+
 }

@@ -6,8 +6,8 @@ import com.example.alarmnotification.fileIO.ObjectFile;
 
 public class ReminderFile extends ObjectFile {
 
-  public static String REMINDER_FILENAME_ROOT = "reminder";
-  public static String REMINDER_FILENAME_JOIN = "-";
+  private static String REMINDER_FILENAME_ROOT = "reminder";
+  private static String REMINDER_FILENAME_JOIN = "-";
 
   public ReminderFile(Context context, String filename) {
     super(context, filename);
