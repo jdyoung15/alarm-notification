@@ -34,9 +34,9 @@ public class ReminderFiles {
     }
 
     List<Integer> ids = filenames
-        .stream()
-        .map(f -> ReminderFile.extractId(f))
-        .collect(Collectors.toList());
+      .stream()
+      .map(f -> ReminderFile.extractId(f))
+      .collect(Collectors.toList());
 
     return Collections.max(ids) + 1;
   }

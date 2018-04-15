@@ -1,17 +1,14 @@
 package com.example.alarmnotification.activities;
 
-import android.app.AlarmManager;
-import android.app.PendingIntent;
-import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.example.alarmnotification.alarms.AlarmReceiver;
 import com.example.alarmnotification.R;
+import com.example.alarmnotification.alarms.AlarmScheduler;
 import com.example.alarmnotification.reminders.Reminder;
+import com.example.alarmnotification.reminders.ReminderFile;
 import com.example.alarmnotification.reminders.ReminderFiles;
 
 import java.time.format.DateTimeFormatter;
@@ -34,20 +31,14 @@ public class DisplayNotificationActivity extends AppCompatActivity {
       TextView textView = new TextView(this);
       textView.setText(DateTimeFormatter.ofPattern("dd/MM/yyyy - hh:mm").format(reminder.getDateTime()) + " " + reminder.getNote());
       textView.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
+      textView.setOnClickListener(v -> {
+        layout.removeView(v);
+        new ReminderFile(this, reminder.getId()).delete();
+        new AlarmScheduler(this).cancel(reminder.getId());
+      });
       layout.addView(textView);
     }
     //cancelAlarm();
-  }
-
-  private void cancelAlarm() {
-    // Request the AlarmManager object
-    AlarmManager manager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-
-    // Create the PendingIntent that would have launched the BroadcastReceiver
-    PendingIntent pending = PendingIntent.getBroadcast(this, 1, new Intent(this, AlarmReceiver.class), 0);
-
-    // Cancel the alarm associated with that PendingIntent
-    manager.cancel(pending);
   }
 
 }

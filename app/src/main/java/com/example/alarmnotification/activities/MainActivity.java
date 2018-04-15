@@ -45,8 +45,10 @@ public class MainActivity extends AppCompatActivity {
     new ReminderFile(this, id).write(reminder);
 
     // schedule alarm
-    AlarmScheduler alarmScheduler = new AlarmScheduler(this, reminder);
-    alarmScheduler.schedule();
+    AlarmScheduler alarmScheduler = new AlarmScheduler(this);
+    // as a precaution, cancel alarm if it already exists
+    alarmScheduler.cancel(reminder.getId());
+    alarmScheduler.schedule(reminder.getId(), reminder.getDateTime().toInstant().toEpochMilli());
 
     // TODO: return to MainActivity if user input is invalid
 

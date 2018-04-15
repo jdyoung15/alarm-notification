@@ -5,27 +5,29 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 
-import com.example.alarmnotification.reminders.Reminder;
-
 public class AlarmScheduler {
 
   private Context context;
-  private Reminder reminder;
+  private AlarmManager manager;
 
-  public AlarmScheduler(Context context, Reminder reminder) {
+  public AlarmScheduler(Context context) {
     this.context = context;
-    this.reminder = reminder;
+    this.manager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
   }
 
-  public void schedule() {
+  public void schedule(int requestCode, long millis) {
+    manager.set(AlarmManager.RTC_WAKEUP, millis, getPendingIntent(requestCode));
+  }
+
+  public void cancel(int requestCode) {
+    manager.cancel(getPendingIntent(requestCode));
+  }
+
+  private PendingIntent getPendingIntent(int requestCode) {
     Intent receiverIntent = new Intent(context, AlarmReceiver.class);
     // TODO magic string
-    receiverIntent.putExtra("reminderId", reminder.getId());
-
-    PendingIntent pendingIntent = PendingIntent.getBroadcast(context, reminder.getId(), receiverIntent, 0);
-
-    AlarmManager manager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-    manager.set(AlarmManager.RTC_WAKEUP, reminder.getDateTime().toInstant().toEpochMilli(), pendingIntent);
+    receiverIntent.putExtra("requestCode", requestCode);
+    return PendingIntent.getBroadcast(context, requestCode, receiverIntent, 0);
   }
 
 }
