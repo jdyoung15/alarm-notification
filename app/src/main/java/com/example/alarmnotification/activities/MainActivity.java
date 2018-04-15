@@ -23,6 +23,7 @@ public class MainActivity extends AppCompatActivity {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_main);
 
+    // TODO move this to application startup?
     ReminderNotificationManager manager = new ReminderNotificationManager(this);
     manager.createChannel();
   }

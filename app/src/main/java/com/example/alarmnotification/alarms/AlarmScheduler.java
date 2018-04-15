@@ -9,8 +9,8 @@ import com.example.alarmnotification.reminders.Reminder;
 
 public class AlarmScheduler {
 
-  public Context context;
-  public Reminder reminder;
+  private Context context;
+  private Reminder reminder;
 
   public AlarmScheduler(Context context, Reminder reminder) {
     this.context = context;
@@ -19,6 +19,7 @@ public class AlarmScheduler {
 
   public void schedule() {
     Intent receiverIntent = new Intent(context, AlarmReceiver.class);
+    // TODO magic string
     receiverIntent.putExtra("reminderId", reminder.getId());
 
     PendingIntent pendingIntent = PendingIntent.getBroadcast(context, reminder.getId(), receiverIntent, 0);

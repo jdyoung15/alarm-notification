@@ -9,17 +9,17 @@ public class ReminderFile extends ObjectFile {
   public static String REMINDER_FILENAME_ROOT = "reminder";
   public static String REMINDER_FILENAME_JOIN = "-";
 
-  public ReminderFile(Context context, String string) {
-    super(context, string);
+  public ReminderFile(Context context, String filename) {
+    super(context, filename);
   }
 
 
-  public ReminderFile(Context context, int id) {
-    super(context, filename(id));
+  public ReminderFile(Context context, int reminderId) {
+    super(context, filename(reminderId));
   }
 
-  public static String filename(int id) {
-    return String.join(REMINDER_FILENAME_JOIN, REMINDER_FILENAME_ROOT, String.valueOf(id));
+  public static String filename(int reminderId) {
+    return String.join(REMINDER_FILENAME_JOIN, REMINDER_FILENAME_ROOT, String.valueOf(reminderId));
   }
 
   public static int extractId(String filename) {

@@ -15,8 +15,10 @@ import com.example.alarmnotification.reminders.ReminderFile;
 public class AlarmReceiver extends BroadcastReceiver {
 
   public void onReceive(Context context, Intent intent) {
+    // TODO handle if default value
     int reminderId = intent.getIntExtra("reminderId", -1);
     Reminder reminder = new ReminderFile(context, reminderId).read();
+    // TODO delete file
     ReminderNotification notification = new ReminderNotification(context, reminder);
     notification.send();
   }
