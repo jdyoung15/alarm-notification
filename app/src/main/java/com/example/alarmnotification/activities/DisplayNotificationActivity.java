@@ -6,10 +6,10 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.alarmnotification.R;
-import com.example.alarmnotification.alarms.AlarmScheduler;
+import com.example.alarmnotification.alarms.ReminderAlarm;
+import com.example.alarmnotification.io.ReminderFile;
+import com.example.alarmnotification.io.ReminderFiles;
 import com.example.alarmnotification.reminders.Reminder;
-import com.example.alarmnotification.reminders.ReminderFile;
-import com.example.alarmnotification.reminders.ReminderFiles;
 
 import java.time.format.DateTimeFormatter;
 import java.util.Collections;
@@ -34,7 +34,7 @@ public class DisplayNotificationActivity extends AppCompatActivity {
       textView.setOnClickListener(v -> {
         layout.removeView(v);
         new ReminderFile(this, reminder.getId()).delete();
-        new AlarmScheduler(this).cancel(reminder.getId());
+        new ReminderAlarm(this, reminder.getId()).cancel();
       });
       layout.addView(textView);
     }

@@ -9,8 +9,8 @@ import android.support.annotation.RequiresApi;
 public class ReminderNotificationManager {
 
   public static final String CHANNEL_ID = "reminder_notification_channel";
-  public static final String CHANNEL_NAME = "Reminder Notification Channel";
-  public static final String CHANNEL_DESCRIPTION = "Notification channel for standard reminder notifications";
+  public static final String CHANNEL_NAME = "Reminder StandardNotification Channel";
+  public static final String CHANNEL_DESCRIPTION = "StandardNotification channel for standard reminder notifications";
   private Context context;
 
   public ReminderNotificationManager(Context context) {

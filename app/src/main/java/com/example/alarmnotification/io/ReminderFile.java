@@ -1,8 +1,8 @@
-package com.example.alarmnotification.reminders;
+package com.example.alarmnotification.io;
 
 import android.content.Context;
 
-import com.example.alarmnotification.fileIO.ObjectFile;
+import com.example.alarmnotification.reminders.Reminder;
 
 public class ReminderFile extends ObjectFile {
 

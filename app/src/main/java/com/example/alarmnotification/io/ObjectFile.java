@@ -1,4 +1,4 @@
-package com.example.alarmnotification.fileIO;
+package com.example.alarmnotification.io;
 
 import android.content.Context;
 

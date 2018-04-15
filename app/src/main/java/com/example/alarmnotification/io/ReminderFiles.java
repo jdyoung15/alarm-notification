@@ -1,6 +1,8 @@
-package com.example.alarmnotification.reminders;
+package com.example.alarmnotification.io;
 
 import android.content.Context;
+
+import com.example.alarmnotification.reminders.Reminder;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -35,7 +37,7 @@ public class ReminderFiles {
 
     List<Integer> ids = filenames
       .stream()
-      .map(f -> ReminderFile.extractId(f))
+      .map(ReminderFile::extractId)
       .collect(Collectors.toList());
 
     return Collections.max(ids) + 1;

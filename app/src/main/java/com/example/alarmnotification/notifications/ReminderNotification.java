@@ -31,19 +31,21 @@ public class ReminderNotification {
   private Notification createNotification() {
     ReminderNotificationManager manager = new ReminderNotificationManager(context);
 
-    Intent intent = new Intent(context, DisplayNotificationActivity.class);
-    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-    PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, 0);
-
     NotificationCompat.Builder builder = new NotificationCompat.Builder(context, manager.getChannelId())
       .setSmallIcon(R.drawable.ic_stat_onesignal_default)
       .setContentTitle("Reminder")
       .setContentText(reminder.getNote())
       .setPriority(NotificationCompat.PRIORITY_DEFAULT)
-      .setContentIntent(pendingIntent)
+      .setContentIntent(createPendingIntent())
       .setAutoCancel(true);
 
     return builder.build();
+  }
+
+  private PendingIntent createPendingIntent() {
+    Intent intent = new Intent(context, DisplayNotificationActivity.class);
+    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+    return PendingIntent.getActivity(context, 0, intent, 0);
   }
 
 }

@@ -7,11 +7,11 @@ import android.view.View;
 import android.widget.EditText;
 
 import com.example.alarmnotification.R;
-import com.example.alarmnotification.alarms.AlarmScheduler;
+import com.example.alarmnotification.alarms.ReminderAlarm;
 import com.example.alarmnotification.notifications.ReminderNotificationManager;
 import com.example.alarmnotification.reminders.Reminder;
-import com.example.alarmnotification.reminders.ReminderFile;
-import com.example.alarmnotification.reminders.ReminderFiles;
+import com.example.alarmnotification.io.ReminderFile;
+import com.example.alarmnotification.io.ReminderFiles;
 import com.example.alarmnotification.userInput.UserInputParser;
 
 import java.time.ZonedDateTime;
@@ -45,10 +45,10 @@ public class MainActivity extends AppCompatActivity {
     new ReminderFile(this, id).write(reminder);
 
     // schedule alarm
-    AlarmScheduler alarmScheduler = new AlarmScheduler(this);
+    ReminderAlarm alarmScheduler = new ReminderAlarm(this, reminder.getId());
     // as a precaution, cancel alarm if it already exists
-    alarmScheduler.cancel(reminder.getId());
-    alarmScheduler.schedule(reminder.getId(), reminder.getDateTime().toInstant().toEpochMilli());
+    alarmScheduler.cancel();
+    alarmScheduler.schedule(reminder.getDateTime().toInstant().toEpochMilli());
 
     // TODO: return to MainActivity if user input is invalid
 
