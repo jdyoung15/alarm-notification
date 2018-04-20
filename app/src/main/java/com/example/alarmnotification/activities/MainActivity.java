@@ -41,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
         new ReminderFile(this, reminder.getId()).delete();
         continue;
       }
-      
+
       TextView textView = new TextView(this);
       textView.setText(DateTimeFormatter.ofPattern("dd/MM/yyyy - hh:mm").format(reminder.getDateTime()) + " " + reminder.getNote());
       textView.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
