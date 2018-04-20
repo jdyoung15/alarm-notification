@@ -21,7 +21,6 @@
             android:name=".alarms.ReminderAlarmReceiver"
             android:process=":remote"></receiver>
 
-        <activity android:name=".activities.DisplayNotificationActivity"></activity>
     </application>
 
 </manifest>
