@@ -2,6 +2,7 @@ package com.example.alarmnotification.activities;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -40,7 +41,8 @@ public class MainActivity extends AppCompatActivity {
     // in content do not change the layout size of the RecyclerView
     //remindersView.setHasFixedSize(true);
 
-    remindersView.setLayoutManager(new LinearLayoutManager(this));
+    LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+    remindersView.setLayoutManager(layoutManager);
 
     List<Reminder> reminders = new ReminderFiles(this).getAllReminders();
     Collections.sort(reminders);
@@ -48,6 +50,10 @@ public class MainActivity extends AppCompatActivity {
     // specify an adapter (see also next example)
     remindersAdapter = new RemindersAdapter(this, reminders);
     remindersView.setAdapter(remindersAdapter);
+
+    RecyclerView.ItemDecoration divider =
+      new DividerItemDecoration(remindersView.getContext(), layoutManager.getOrientation());
+    remindersView.addItemDecoration(divider);
   }
 
   public void processReminderMessage(View view) {
