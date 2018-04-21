@@ -44,7 +44,7 @@ public class RemindersAdapter extends RecyclerView.Adapter<RemindersAdapter.View
     // create a new view
     TextView tv = (TextView) LayoutInflater
       .from(context)
-      .inflate(R.layout.my_text_view, parent, false);
+      .inflate(R.layout.reminder_display, parent, false);
     return new ViewHolder(tv);
   }
 
