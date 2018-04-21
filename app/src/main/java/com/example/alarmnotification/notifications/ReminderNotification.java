@@ -8,6 +8,7 @@ import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
 
 import com.example.alarmnotification.R;
+import com.example.alarmnotification.activities.MainActivity;
 import com.example.alarmnotification.reminders.Reminder;
 
 public class ReminderNotification {
@@ -35,10 +36,17 @@ public class ReminderNotification {
       .setContentTitle("Reminder")
       .setContentText(reminder.getNote())
       .setPriority(NotificationCompat.PRIORITY_DEFAULT)
-      .setContentIntent(PendingIntent.getActivity(context, 0, new Intent(), 0)) // to cancel notification on tap
+      .setContentIntent(createPendingIntent())
+      //.setContentIntent(PendingIntent.getActivity(context, 0, new Intent(), 0)) // to cancel notification on tap
       .setAutoCancel(true);
 
     return builder.build();
+  }
+
+  private PendingIntent createPendingIntent() {
+    Intent intent = new Intent(context, MainActivity.class);
+    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+    return PendingIntent.getActivity(context, 0, intent, 0);
   }
 
 }
