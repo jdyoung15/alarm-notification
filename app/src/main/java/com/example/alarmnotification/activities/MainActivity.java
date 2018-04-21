@@ -2,12 +2,13 @@ package com.example.alarmnotification.activities;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import com.example.alarmnotification.R;
+import com.example.alarmnotification.RemindersAdapter;
 import com.example.alarmnotification.alarms.ReminderAlarm;
 import com.example.alarmnotification.io.ReminderFile;
 import com.example.alarmnotification.io.ReminderFiles;
@@ -16,11 +17,13 @@ import com.example.alarmnotification.reminders.Reminder;
 import com.example.alarmnotification.userInput.UserInputParser;
 
 import java.time.ZonedDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.Collections;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
+
+  private RecyclerView remindersView;
+  private RecyclerView.Adapter remindersAdapter;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -31,28 +34,20 @@ public class MainActivity extends AppCompatActivity {
     ReminderNotificationManager manager = new ReminderNotificationManager(this);
     manager.createChannel();
 
-    LinearLayout layout = findViewById(R.id.reminder_list);
+    remindersView = findViewById(R.id.reminder_list);
+
+    // use this setting to improve performance if you know that changes
+    // in content do not change the layout size of the RecyclerView
+    //remindersView.setHasFixedSize(true);
+
+    remindersView.setLayoutManager(new LinearLayoutManager(this));
 
     List<Reminder> reminders = new ReminderFiles(this).getAllReminders();
     Collections.sort(reminders);
 
-    for (Reminder reminder : reminders) {
-      if (reminder.getDateTime().isBefore(ZonedDateTime.now())) {
-        new ReminderFile(this, reminder.getId()).delete();
-        continue;
-      }
-
-      TextView textView = new TextView(this);
-      textView.setText(DateTimeFormatter.ofPattern("dd/MM/yyyy - hh:mm").format(reminder.getDateTime()) + " " + reminder.getNote());
-      textView.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
-      textView.setOnClickListener(v -> {
-        layout.removeView(v);
-        new ReminderFile(this, reminder.getId()).delete();
-        new ReminderAlarm(this, reminder.getId()).cancel();
-      });
-      layout.addView(textView);
-    }
-
+    // specify an adapter (see also next example)
+    remindersAdapter = new RemindersAdapter(this, reminders);
+    remindersView.setAdapter(remindersAdapter);
   }
 
   public void processReminderMessage(View view) {
@@ -84,4 +79,5 @@ public class MainActivity extends AppCompatActivity {
 //    startActivity(getIntent());
     recreate();
   }
+  
 }
