@@ -31,11 +31,11 @@ public class RemindersAdapter extends RecyclerView.Adapter<RemindersAdapter.View
   // you provide access to all the views for a data item in a view holder
   public static class ViewHolder extends RecyclerView.ViewHolder {
     // each data item is just a string in this case
-    public LinearLayout linearLayout;
+    public LinearLayout layout;
 
-    public ViewHolder(LinearLayout linearLayout) {
-      super(linearLayout);
-      this.linearLayout = linearLayout;
+    public ViewHolder(LinearLayout layout) {
+      super(layout);
+      this.layout = layout;
     }
 
   }
@@ -43,23 +43,9 @@ public class RemindersAdapter extends RecyclerView.Adapter<RemindersAdapter.View
   // Create new views (invoked by the layout manager)
   @Override
   public RemindersAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-    // create a new view
-    TextView tv = (TextView) LayoutInflater
+    LinearLayout layout = (LinearLayout) LayoutInflater
       .from(context)
-      .inflate(R.layout.reminder_display, parent, false);
-    tv.setTag("reminderText");
-
-    ImageButton ib = (ImageButton) LayoutInflater
-      .from(context)
-      .inflate(R.layout.reminder_delete_button, parent, false);
-    ib.setTag("deleteButton");
-
-    LinearLayout layout = new LinearLayout(context);
-    layout.setOrientation(LinearLayout.HORIZONTAL);
-    layout.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
-
-    layout.addView(tv);
-    layout.addView(ib);
+      .inflate(R.layout.reminder_list_row, parent, false);
 
     return new ViewHolder(layout);
   }
@@ -68,9 +54,11 @@ public class RemindersAdapter extends RecyclerView.Adapter<RemindersAdapter.View
   @Override
   public void onBindViewHolder(ViewHolder holder, int position) {
     Reminder reminder = remindersDataset.get(position);
-    TextView tv = holder.linearLayout.findViewWithTag("reminderText");
+
+    TextView tv = holder.layout.findViewWithTag("reminderText");
     tv.setText(DateTimeFormatter.ofPattern("M/d h:mma").format(reminder.getDateTime()) + " " + reminder.getNote());
-    ImageButton ib = holder.linearLayout.findViewWithTag("deleteButton");
+
+    ImageButton ib = holder.layout.findViewWithTag("deleteButton");
     ib.setOnClickListener(v -> {
       remindersDataset.remove(position);
       notifyItemRemoved(position);
