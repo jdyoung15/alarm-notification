@@ -52,7 +52,7 @@ public class RemindersAdapter extends RecyclerView.Adapter<RemindersAdapter.View
   @Override
   public void onBindViewHolder(ViewHolder holder, int position) {
     Reminder reminder = remindersDataset.get(position);
-    holder.textView.setText(DateTimeFormatter.ofPattern("dd/MM/yyyy - hh:mm").format(reminder.getDateTime()) + " " + reminder.getNote());
+    holder.textView.setText(DateTimeFormatter.ofPattern("M/d h:mma").format(reminder.getDateTime()) + " " + reminder.getNote());
     holder.textView.setOnClickListener(v -> {
       remindersDataset.remove(position);
       notifyItemRemoved(position);
