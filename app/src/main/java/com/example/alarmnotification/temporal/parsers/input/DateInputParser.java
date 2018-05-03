@@ -14,6 +14,12 @@ public class DateInputParser extends TemporalInputParser {
     new DatePatternParser("M-d-yyyy"),
     new DatePatternParser("M-d-yy"),
     new PartialDatePatternParser("M-d-yyyy", "-%d"),
+    new DatePatternParser("MMM d yyyy"),
+    new DatePatternParser("MMM d yy"),
+    new PartialDatePatternParser("MMM d yyyy", " %d"),
+    new DatePatternParser("MMMM d yyyy"),
+    new DatePatternParser("MMMM d yy"),
+    new PartialDatePatternParser("MMMM d yyyy", " %d"),
   };
 
   public DateInputParser() {
@@ -25,7 +31,14 @@ public class DateInputParser extends TemporalInputParser {
   }
 
   String format(String word) {
-    return word;
+    if (word.isEmpty()) {
+      return word;
+    }
+    return capitalizeFirstLetter(word);
+  }
+
+  private String capitalizeFirstLetter(String word) {
+    return word.substring(0, 1).toUpperCase() + word.substring(1);
   }
 
 }

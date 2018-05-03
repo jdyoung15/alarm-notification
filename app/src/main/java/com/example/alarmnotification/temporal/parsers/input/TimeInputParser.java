@@ -14,8 +14,8 @@ public class TimeInputParser extends TemporalInputParser {
     new TimePatternParser("h:mm a"),    // 8:30 PM
     new TimePatternParser("hmm a"),     // 830 PM
     new TimePatternParser("k:mm"),     // 8:30
-    new TimePatternParser("kmm"),      // 830
-    new TimePatternParser("k")         // 8
+    //new TimePatternParser("kmm"),      // 830
+    //new TimePatternParser("k")         // 8
   };
 
   public TimeInputParser() {
