@@ -11,6 +11,9 @@ public class DateInputParser extends TemporalInputParser {
     new DatePatternParser("M/d/yyyy"),
     new DatePatternParser("M/d/yy"),
     new PartialDatePatternParser("M/d/yyyy", "/%d"),
+    new DatePatternParser("M-d-yyyy"),
+    new DatePatternParser("M-d-yy"),
+    new PartialDatePatternParser("M-d-yyyy", "-%d"),
   };
 
   public DateInputParser() {
