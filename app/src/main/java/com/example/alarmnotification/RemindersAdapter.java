@@ -12,6 +12,8 @@ import com.example.alarmnotification.alarms.ReminderAlarm;
 import com.example.alarmnotification.io.ReminderFile;
 import com.example.alarmnotification.reminders.Reminder;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
@@ -54,9 +56,12 @@ public class RemindersAdapter extends RecyclerView.Adapter<RemindersAdapter.View
   @Override
   public void onBindViewHolder(ViewHolder holder, int position) {
     Reminder reminder = remindersDataset.get(position);
+    LocalDate date = reminder.getDateTime().toLocalDate();
+    LocalTime time = reminder.getDateTime().toLocalTime();
 
     TextView tv = holder.layout.findViewWithTag("reminderText");
-    tv.setText(DateTimeFormatter.ofPattern("M/d h:mma").format(reminder.getDateTime()) + " " + reminder.getNote());
+    //tv.setText(DateTimeFormatter.ofPattern("M/d h:mma").format(reminder.getDateTime()) + " " + reminder.getNote());
+    tv.setText(dateDisplayText(date, time) + " " + DateTimeFormatter.ofPattern("h:mma").format(time) + " " + reminder.getNote());
 
     ImageButton ib = holder.layout.findViewWithTag("deleteButton");
     ib.setOnClickListener(v -> {
@@ -66,6 +71,56 @@ public class RemindersAdapter extends RecyclerView.Adapter<RemindersAdapter.View
       new ReminderFile(context, reminder.getId()).delete();
       new ReminderAlarm(context, reminder.getId()).cancel();
     });
+  }
+
+  /**
+   * Assumes @date is >= today and @time is >= now.
+   * @param date
+   * @param time
+   * @return
+   */
+  private String dateDisplayText(LocalDate date, LocalTime time) {
+//    If later in same day
+//      Time
+//    If 12a - 4a next day
+//      If currently AM
+//        “Tonight “ + time
+//      Else
+//        Time
+//    If 5a - 12a next day
+//      Tomorrow + time
+//    Else
+//      Date + time
+    LocalDate today = LocalDate.now();
+    LocalDate tomorrow = today.plusDays(1);
+    LocalTime now = LocalTime.now();
+
+    // reminder set for later today
+    if (date.isEqual(today)) {
+      return "";
+    }
+    // reminder set for tomorrow
+    else if (date.isEqual(tomorrow)) {
+      // reminder set for 12am - 4am
+      if (time.isBefore(LocalTime.of(4, 0))) {
+        // currently AM
+        if (now.isBefore(LocalTime.NOON)) {
+          return "Tonight";
+        }
+        // currently PM
+        else {
+          return "";
+        }
+      }
+      // reminder set for 4am - 11:59:59
+      else {
+        return "Tomorrow";
+      }
+    }
+    // reminder set for after tomorrow
+    else {
+      return DateTimeFormatter.ofPattern("M/d").format(date);
+    }
   }
 
   // Return the size of your dataset (invoked by the layout manager)
