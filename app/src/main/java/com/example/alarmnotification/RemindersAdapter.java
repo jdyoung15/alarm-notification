@@ -2,6 +2,7 @@ package com.example.alarmnotification;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
@@ -61,8 +62,10 @@ public class RemindersAdapter extends RecyclerView.Adapter<RemindersAdapter.View
     LocalTime time = reminder.getDateTime().toLocalTime();
 
     TextView tv = holder.layout.findViewWithTag("reminderText");
-    //tv.setText(DateTimeFormatter.ofPattern("M/d h:mma").format(reminder.getDateTime()) + " " + reminder.getNote());
-    tv.setText(DateDisplayFormatter.format(date, time) + " " + TimeDisplayFormatter.format(time) + " " + reminder.getNote());
+    tv.setText(
+      Html.fromHtml(
+        "<b>" + DateDisplayFormatter.format(date, time) + " " + TimeDisplayFormatter.format(time) + "</b><br>" + reminder.getNote(),
+        0));
 
     ImageButton ib = holder.layout.findViewWithTag("deleteButton");
     ib.setOnClickListener(v -> {
