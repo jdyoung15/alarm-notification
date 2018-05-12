@@ -12,10 +12,10 @@ import com.example.alarmnotification.alarms.ReminderAlarm;
 import com.example.alarmnotification.io.ReminderFile;
 import com.example.alarmnotification.reminders.Reminder;
 import com.example.alarmnotification.temporal.formatters.DateDisplayFormatter;
+import com.example.alarmnotification.temporal.formatters.TimeDisplayFormatter;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 public class RemindersAdapter extends RecyclerView.Adapter<RemindersAdapter.ViewHolder> {
@@ -62,7 +62,7 @@ public class RemindersAdapter extends RecyclerView.Adapter<RemindersAdapter.View
 
     TextView tv = holder.layout.findViewWithTag("reminderText");
     //tv.setText(DateTimeFormatter.ofPattern("M/d h:mma").format(reminder.getDateTime()) + " " + reminder.getNote());
-    tv.setText(DateDisplayFormatter.format(date, time) + " " + DateTimeFormatter.ofPattern("h:mma").format(time) + " " + reminder.getNote());
+    tv.setText(DateDisplayFormatter.format(date, time) + " " + TimeDisplayFormatter.format(time) + " " + reminder.getNote());
 
     ImageButton ib = holder.layout.findViewWithTag("deleteButton");
     ib.setOnClickListener(v -> {
