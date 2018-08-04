@@ -51,9 +51,19 @@ public class MainActivity extends AppCompatActivity {
     remindersAdapter = new RemindersAdapter(this, reminders);
     remindersView.setAdapter(remindersAdapter);
 
+    // divider between alarm items
     RecyclerView.ItemDecoration divider =
       new DividerItemDecoration(remindersView.getContext(), layoutManager.getOrientation());
     remindersView.addItemDecoration(divider);
+
+    // scroll to bottom of alarm items when soft keyboard is opened
+    remindersView.addOnLayoutChangeListener((View v, int left, int top, int right, int bottom,
+      int oldLeft, int oldTop, int oldRight, int oldBottom) -> {
+        // Check if recycler view has been shifted up (i.e. bottom now has lower value)
+        if (bottom < oldBottom) {
+          remindersView.smoothScrollToPosition(reminders.size() - 1);
+        }
+    });
   }
 
   public void processReminderMessage(View view) {
